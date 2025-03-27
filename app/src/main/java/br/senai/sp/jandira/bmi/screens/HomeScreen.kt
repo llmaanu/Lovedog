@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.bmi.screens
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,7 +44,19 @@ import br.senai.sp.jandira.bmi.R
 
 @Composable
 fun HomeScreen(navegacao: NavHostController?) {
-    val nameState = remember { mutableStateOf("") }
+    val nameState = remember {
+        mutableStateOf("")
+    }
+    var isErrorState = remember{
+        mutableStateOf(false)
+    }
+    // abrir ou criar arquivo shared preferences
+    val context = LocalContext.current
+    val userFile = context
+        .getSharedPreferences("userFile", Context.MODE_PRIVATE)
+
+    // colocar arquivo em modo de edição
+    val editor = userFile.edit()
 
 
     Box(
@@ -71,7 +86,7 @@ fun HomeScreen(navegacao: NavHostController?) {
         ){
             Image(
                 painter = painterResource(
-                    R.drawable.doglover
+                    R.drawable.mulheres
                 ),
                 contentDescription = stringResource(
                     R.string.logo
@@ -139,12 +154,34 @@ fun HomeScreen(navegacao: NavHostController?) {
                                     tint = Color(0xFFE11493)
 
                                 )
+                            },
+
+                            isError = true,
+                            supportingText = {
+                                if (isErrorState.value){
+                                    Text(
+                                        text = "O nome é obrigatório!"
+                                    )
+                                    //trailingIcon = {
+                                   // if (isErrorState.value){
+                                     //   Icon(
+                                       //     imageVector = Icons.Default.Error
+                                       //             contentDescription = "",
+                                        ///    tint = Color.Red
+                                      //  )
+                                    }
                             }
                         )
                     }
                     Button(
                         onClick = {
-                            navegacao?.navigate("UserDataScreen")
+                            if(nameState.value.isEmpty()){
+                                isErrorState.value = true
+                            } else{
+                                editor.putString("user_Name", nameState.value)
+                                editor.apply()
+                                navegacao?.navigate("dados")
+                            }
                         },
                         shape = RoundedCornerShape(8.dp)
                     ) {
@@ -170,6 +207,6 @@ fun HomeScreen(navegacao: NavHostController?) {
 @Preview(showSystemUi = true)
 @Composable
 private fun HomeScreenPreview() {
-    val navController = rememberNavController() // Garante que um NavController válido seja criado
+    val navController = rememberNavController()
     HomeScreen(navegacao = navController)
 }

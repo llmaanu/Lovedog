@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.bmiresultscreen.screens
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +41,7 @@ import br.senai.sp.jandira.bmi.R
 
 @Composable
 fun ResultBMI(){
+
     Box(
         modifier = Modifier
             .fillMaxSize()

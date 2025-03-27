@@ -4,5 +4,19 @@
     <string name="welcome">Bem-vindo!</string>
     <string name="your_name">Qual é o seu nome?</string>
     <string name="next">Próximo</string>
+    <string name="hi">Olá</string>
+    <string name="calculate">Calcular</string>
+    <string name="age">Idade</string>
+    <string name="weight">Altura</string>
+    <string name="height">Peso</string>
+    <string name="male">Masculino</string>
+    <string name="female">Feminino</string>
+    <string name="result" >Resultado</string>
+    <string name="bmi_value">30.6</string>
+    <string name="class_bmi">You have Class I Obesity</string>
+    <string name="new_calculate">Novo Cáuculo</string>
+    <string name="age_value">25</string>
+    <string name="weight_value">70</string>
+    <string name="height_value">178</string>
+    <string name="name_error_message">O nome de usuário é necessário!</string>
 </resources>
-
