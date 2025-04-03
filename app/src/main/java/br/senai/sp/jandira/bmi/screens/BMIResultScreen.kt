@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.bmiresultscreen.screens
+package br.senai.sp.jandira.bmi.screens
 
 import android.content.Context
 import androidx.compose.foundation.BorderStroke
@@ -29,18 +29,26 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import br.senai.sp.jandira.bmi.R
+import java.util.Locale
 
 
 @Composable
-fun ResultBMI(){
+fun ResultBMI(navegacao: NavHostController?){
+
+    val context = LocalContext.current
+    val userFile = context.getSharedPreferences("userFile", Context.MODE_PRIVATE)
+
+    val userWeight = userFile.getInt("user_weight", 0)
+    val userHeight = userFile.getFloat("user_height", 0.0f)
+    val userAge = userFile.getInt("user_age", 0)
 
     Box(
         modifier = Modifier
@@ -148,7 +156,7 @@ fun ResultBMI(){
                                     fontSize = 20.sp
                                 )
                                 Text(
-                                    text = stringResource(R.string.age_value),
+                                    text = "$userAge",
                                     color = Color.Black,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 20.sp
@@ -167,7 +175,7 @@ fun ResultBMI(){
                                     fontSize = 20.sp
                                 )
                                 Text(
-                                    text = stringResource(R.string.weight_value),
+                                    text = "$userWeight",
                                     color = Color.Black,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 20.sp
@@ -186,7 +194,7 @@ fun ResultBMI(){
                                     fontSize = 20.sp
                                 )
                                 Text(
-                                    text = stringResource(R.string.height_value),
+                                    text = String.format(Locale.getDefault(), "%2", userHeight),
                                     color = Color.Black,
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 20.sp
@@ -229,5 +237,6 @@ fun ResultBMI(){
 @Preview(showSystemUi = true)
 @Composable
 private fun BMIResultPreview() {
-    ResultBMI()
+    ResultBMI(navegacao = null)
 }
+

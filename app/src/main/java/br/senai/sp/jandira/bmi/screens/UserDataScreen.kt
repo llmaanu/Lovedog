@@ -23,10 +23,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import br.senai.sp.jandira.bmi.R
 
 @Composable
-fun UserDataScreen() {
+fun UserDataScreen(navegacao: NavHostController?) {
     var selectedGender by remember {
         mutableStateOf<String?>(null)
     }
@@ -106,6 +107,7 @@ fun UserDataScreen() {
                             editor.putInt("user_weight", weightState.toIntOrNull() ?: 0)
                             editor.putFloat("user_height", heightState.toFloatOrNull() ?: 0f)
                             editor.apply()
+                            navegacao?.navigate("result")
                         },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF10B5E))
@@ -160,5 +162,5 @@ fun InputField(value: String, label: String, onValueChange: (String) -> Unit) {
 @Preview(showSystemUi = true)
 @Composable
 private fun UserDataScreenPreview() {
-    UserDataScreen()
+    UserDataScreen(null)
 }
